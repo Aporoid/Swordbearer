@@ -565,6 +565,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6671b82d458a5c74bb2601fe4a5d9c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lives: 3
+  name: Player 1
+  jumpHeight: 5
+  speed: 3
 --- !u!1001 &1957655429
 Prefab:
   m_ObjectHideFlags: 0
