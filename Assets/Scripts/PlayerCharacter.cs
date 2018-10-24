@@ -9,10 +9,10 @@ public class PlayerCharacter : MonoBehaviour
     private float accelerationForce = 5;
 
     [SerializeField]
-    private float maxSpeed = 5;
+    private float maxSpeed = 5f;
 
     [SerializeField]
-    private float jumpForce = 10;
+    private float jumpForce = 10f;
 
     [SerializeField]
     private Rigidbody2D rb2d;
@@ -26,21 +26,29 @@ public class PlayerCharacter : MonoBehaviour
 
     private float horizontalInput;
     private bool isOnGround;
+    bool facingRight = true;
+
+    Animator anim;
+
     private Collider2D[] groundHitDetectionResults = new Collider2D[16];
 
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
         UpdateIsOnGround();
         UpdateHorizontalInput();
         HandleJumpInput();
+        UpdateAnimationParameters();
     }
 
     private void UpdateIsOnGround()
     {
         isOnGround = groundDetectTrigger.OverlapCollider(groundContactFilter, groundHitDetectionResults) > 0;
-        //Debug.Log("IsOnGround?: " + isOnGround);
     }
 
     private void UpdateHorizontalInput()
@@ -59,6 +67,11 @@ public class PlayerCharacter : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+
+        if (horizontalInput > 0 && !facingRight)
+            Flip();
+        else if (horizontalInput < 0 && facingRight)
+            Flip();
     }
 
     private void Move()
@@ -69,4 +82,17 @@ public class PlayerCharacter : MonoBehaviour
         rb2d.velocity = clampedVelocity;
     }
 
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
+    void UpdateAnimationParameters()
+    {
+        anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        anim.SetBool("Ground", isOnGround);
+    }
 }
