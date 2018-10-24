@@ -94,5 +94,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         anim.SetBool("Ground", isOnGround);
+
+    }
+
+    void SwordAttack()
+    {
+
     }
 }
