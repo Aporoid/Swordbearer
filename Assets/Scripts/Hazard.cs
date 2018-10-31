@@ -10,7 +10,10 @@ public class Hazard : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Something hit the spikes");
-            SceneManager.LoadScene(0);
+            PlayerCharacter playerCharacter = collision.gameObject.GetComponent<PlayerCharacter>();
+            playerCharacter.KillPlayer();
+
+          //  SceneManager.LoadScene(0);
         }
         
     }

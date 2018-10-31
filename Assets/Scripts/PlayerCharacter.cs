@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -23,10 +24,11 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     private ContactFilter2D groundContactFilter;
 
-
+    private Checkpoint currentCheckpoint;
     private float horizontalInput;
     private bool isOnGround;
     bool facingRight = true;
+    private bool isDead;
 
     Animator anim;
 
@@ -58,7 +60,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private void HandleJumpInput()
     {
-        if (Input.GetButtonDown("Jump") && isOnGround)
+        if (Input.GetButtonDown("Jump") && isOnGround && !isDead)
         {
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -67,7 +69,11 @@ public class PlayerCharacter : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        if (!isDead) FlipIfNeeded();
+    }
 
+    private void FlipIfNeeded()
+    {
         if (horizontalInput > 0 && !facingRight)
             Flip();
         else if (horizontalInput < 0 && facingRight)
@@ -76,10 +82,13 @@ public class PlayerCharacter : MonoBehaviour
 
     private void Move()
     {
-        rb2d.AddForce(Vector2.right * horizontalInput * accelerationForce);
-        Vector2 clampedVelocity = rb2d.velocity;
-        clampedVelocity.x = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
-        rb2d.velocity = clampedVelocity;
+        if (!isDead)
+        {
+            rb2d.AddForce(Vector2.right * horizontalInput * accelerationForce);
+            Vector2 clampedVelocity = rb2d.velocity;
+            clampedVelocity.x = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
+            rb2d.velocity = clampedVelocity;
+        }
     }
 
     void Flip()
@@ -94,11 +103,39 @@ public class PlayerCharacter : MonoBehaviour
     {
         anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         anim.SetBool("Ground", isOnGround);
+        anim.SetBool("IsDead", isDead);
+    }
 
+    public void KillPlayer()
+    {
+        isDead = true;
+        Respawn();
+    }
+
+    public void Respawn()
+    {
+        isDead = false;
+        if (currentCheckpoint == null)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            transform.position = currentCheckpoint.transform.position;
+
+        }    
+    }
+
+    public void SetCurrentCheckpoint(Checkpoint newCurrentCheckpoint)
+    {
+        currentCheckpoint = newCurrentCheckpoint;
     }
 
     void SwordAttack()
     {
+        if (Input.GetButtonDown(""))
+        {
 
+        }
     }
 }
