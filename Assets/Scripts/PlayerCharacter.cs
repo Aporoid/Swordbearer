@@ -45,6 +45,7 @@ public class PlayerCharacter : MonoBehaviour
         UpdateIsOnGround();
         UpdateHorizontalInput();
         HandleJumpInput();
+        SwordAttack();
         UpdateAnimationParameters();
     }
 
@@ -133,9 +134,9 @@ public class PlayerCharacter : MonoBehaviour
 
     void SwordAttack()
     {
-        if (Input.GetButtonDown(""))
+        if (Input.GetButtonDown("Attack"))
         {
-
+            anim.SetBool("IfAttack", true);
         }
     }
 }
