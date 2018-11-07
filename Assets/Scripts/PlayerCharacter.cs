@@ -137,6 +137,7 @@ public class PlayerCharacter : MonoBehaviour
         if (Input.GetButtonDown("Attack"))
         {
             anim.SetBool("IfAttack", true);
+            
         }
     }
 }
