@@ -19,16 +19,27 @@ public class PlayerCharacter : MonoBehaviour
     private Rigidbody2D rb2d;
 
     [SerializeField]
+    private Collider2D playerGroundCollider;
+
+    [SerializeField]
     private Collider2D groundDetectTrigger;
 
     [SerializeField]
     private ContactFilter2D groundContactFilter;
+
+    [SerializeField]
+    private PhysicsMaterial2D playerMovingPhysicsMaterial, playerStoppingPhysicsMaterial;
+
+    [SerializeField]
+    private float boost = 300f;
 
     private Checkpoint currentCheckpoint;
     private float horizontalInput;
     private bool isOnGround;
     bool facingRight = true;
     private bool isDead;
+    private bool canDash;
+
 
     Animator anim;
 
@@ -48,6 +59,12 @@ public class PlayerCharacter : MonoBehaviour
         SwordAttack();
         UpdateAnimationParameters();
     }
+    private void FixedUpdate()
+    {
+        UpdatePhysicsMaterials();
+        Move();
+        if (!isDead) FlipIfNeeded();
+    }
 
     private void UpdateIsOnGround()
     {
@@ -59,6 +76,18 @@ public class PlayerCharacter : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
     }
 
+    private void UpdatePhysicsMaterials()
+    {
+        if(Mathf.Abs(horizontalInput) > 0)
+        {
+            playerGroundCollider.sharedMaterial = playerMovingPhysicsMaterial;
+        }
+        else
+        {
+            playerGroundCollider.sharedMaterial = playerStoppingPhysicsMaterial;
+        }
+    }
+
     private void HandleJumpInput()
     {
         if (Input.GetButtonDown("Jump") && isOnGround && !isDead)
@@ -67,11 +96,6 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        Move();
-        if (!isDead) FlipIfNeeded();
-    }
 
     private void FlipIfNeeded()
     {
@@ -136,8 +160,20 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (Input.GetButtonDown("Attack"))
         {
-            anim.SetBool("IfAttack", true);
-            
+            anim.SetBool("IfAttack", canDash);
+
+            if (horizontalInput > 0 && !facingRight)
+            {
+                Flip();
+                rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
+            }
+
+            else if (horizontalInput < 0 && facingRight)
+            {
+                Flip();
+                rb2d.AddForce(new Vector2(-boost, 0), ForceMode2D.Impulse);
+            }
+
         }
     }
 }

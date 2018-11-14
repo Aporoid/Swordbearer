@@ -10457,7 +10457,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1921466544}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 99a8ef6ac466ad0449fc543aceabda7e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -10567,6 +10567,7 @@ MonoBehaviour:
   maxSpeed: 8
   jumpForce: 13
   rb2d: {fileID: 1921466546}
+  playerGroundCollider: {fileID: 1921466545}
   groundDetectTrigger: {fileID: 1921466550}
   groundContactFilter:
     useTriggers: 0
@@ -10582,6 +10583,11 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  playerMovingPhysicsMaterial: {fileID: 6200000, guid: b1a8081fc5135e34dafaa76612f11d42,
+    type: 2}
+  playerStoppingPhysicsMaterial: {fileID: 6200000, guid: 99a8ef6ac466ad0449fc543aceabda7e,
+    type: 2}
+  boost: 300
 --- !u!58 &1921466550
 CircleCollider2D:
   m_ObjectHideFlags: 0
