@@ -6,11 +6,14 @@ public class CollectableScript : MonoBehaviour {
 
     private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider2D;
+
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +21,9 @@ public class CollectableScript : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player"))
         {
             audioSource.Play();
-            Destroy(spriteRenderer);
+            spriteRenderer.enabled = false;
+            boxCollider2D.enabled = false;
+            Destroy(gameObject, audioSource.clip.length);
             
         }
     }
