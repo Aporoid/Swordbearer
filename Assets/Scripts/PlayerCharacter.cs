@@ -58,6 +58,7 @@ public class PlayerCharacter : MonoBehaviour
         HandleJumpInput();
         SwordAttack();
         UpdateAnimationParameters();
+        UpdateRespawn();
     }
     private void FixedUpdate()
     {
@@ -134,7 +135,15 @@ public class PlayerCharacter : MonoBehaviour
     public void KillPlayer()
     {
         isDead = true;
-        Respawn();
+        rb2d.freezeRotation = false;
+    }
+
+    private void UpdateRespawn()
+    {
+        if(isDead && Input.GetButtonDown("Respawn"))
+        {
+            Respawn();
+        }
     }
 
     public void Respawn()
@@ -148,7 +157,9 @@ public class PlayerCharacter : MonoBehaviour
         {
             transform.position = currentCheckpoint.transform.position;
 
-        }    
+        }
+        rb2d.freezeRotation = true;
+        rb2d.rotation = 0;
     }
 
     public void SetCurrentCheckpoint(Checkpoint newCurrentCheckpoint)
