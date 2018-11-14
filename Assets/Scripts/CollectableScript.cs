@@ -19,6 +19,7 @@ public class CollectableScript : MonoBehaviour {
         {
             audioSource.Play();
             Destroy(spriteRenderer);
+            
         }
     }
 }
