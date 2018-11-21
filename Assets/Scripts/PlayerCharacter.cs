@@ -31,14 +31,18 @@ public class PlayerCharacter : MonoBehaviour
     private PhysicsMaterial2D playerMovingPhysicsMaterial, playerStoppingPhysicsMaterial;
 
     [SerializeField]
-    private float boost = 300f;
+    private float boost;
 
     private Checkpoint currentCheckpoint;
+    private int DirectionalFace = 0;
     private float horizontalInput;
     private bool isOnGround;
     bool facingRight = true;
     private bool isDead;
-    private bool canDash;
+    private bool isDashing;
+
+    [SerializeField]
+    private float Timer;
 
 
     Animator anim;
@@ -59,6 +63,7 @@ public class PlayerCharacter : MonoBehaviour
         SwordAttack();
         UpdateAnimationParameters();
         UpdateRespawn();
+        Dashing();
     }
     private void FixedUpdate()
     {
@@ -101,14 +106,20 @@ public class PlayerCharacter : MonoBehaviour
     private void FlipIfNeeded()
     {
         if (horizontalInput > 0 && !facingRight)
+        {
             Flip();
+            DirectionalFace = -1;
+        }
         else if (horizontalInput < 0 && facingRight)
+        {
             Flip();
+            DirectionalFace = 1;
+        }
     }
 
     private void Move()
     {
-        if (!isDead)
+        if (!isDead && !isDashing)
         {
             rb2d.AddForce(Vector2.right * horizontalInput * accelerationForce);
             Vector2 clampedVelocity = rb2d.velocity;
@@ -169,10 +180,13 @@ public class PlayerCharacter : MonoBehaviour
 
     void SwordAttack()
     {
-        if (Input.GetButtonDown("Attack") && !isDead)
+        
+
+        if (Input.GetButtonDown("Attack") && !isDead && !isDashing)
         {
+            isDashing = true;
             anim.SetTrigger("AttackTrigger");
-            anim.SetBool("IsDashing", canDash);
+            
 
 
             //if (horizontalInput > 0 && !facingRight)
@@ -188,5 +202,32 @@ public class PlayerCharacter : MonoBehaviour
             //}
 
         }
+    }
+
+    void Dashing()
+    {
+        if (isDashing)
+        {
+            Timer--;
+            FreezeY();
+            rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
+
+
+            if (Timer <= 0)
+            {
+                isDashing = false;
+                UnfreezeY();
+            }
+        }
+    }
+
+    void FreezeY()
+    {
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+    }
+
+    void UnfreezeY()
+    {
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }
