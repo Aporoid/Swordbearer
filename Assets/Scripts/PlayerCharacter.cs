@@ -169,21 +169,23 @@ public class PlayerCharacter : MonoBehaviour
 
     void SwordAttack()
     {
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Attack") && !isDead)
         {
-            anim.SetBool("IfAttack", canDash);
+            anim.SetTrigger("AttackTrigger");
+            anim.SetBool("IsDashing", canDash);
 
-            if (horizontalInput > 0 && !facingRight)
-            {
-                Flip();
-                rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
-            }
 
-            else if (horizontalInput < 0 && facingRight)
-            {
-                Flip();
-                rb2d.AddForce(new Vector2(-boost, 0), ForceMode2D.Impulse);
-            }
+            //if (horizontalInput > 0 && !facingRight)
+            //{
+            //    Flip();
+            //    rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
+            //}
+
+            //else if (horizontalInput < 0 && facingRight)
+            //{
+            //    Flip();
+            //    rb2d.AddForce(new Vector2(-boost, 0), ForceMode2D.Impulse);
+            //}
 
         }
     }
