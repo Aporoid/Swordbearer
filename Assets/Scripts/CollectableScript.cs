@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CollectableScript : MonoBehaviour {
 
+    [SerializeField]
+    int Score = 0;
+
     private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
@@ -21,6 +24,7 @@ public class CollectableScript : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player"))
         {
             audioSource.Play();
+            Score++;
             spriteRenderer.enabled = false;
             boxCollider2D.enabled = false;
             Destroy(gameObject, audioSource.clip.length);

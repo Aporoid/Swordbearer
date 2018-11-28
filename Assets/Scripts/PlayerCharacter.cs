@@ -33,6 +33,14 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     private float boost;
 
+    [SerializeField]
+    private AudioClip jumpClip;
+
+    [SerializeField]
+    private AudioClip deathClip;
+
+    private AudioSource audioSource;
+
     private Checkpoint currentCheckpoint;
     private int DirectionalFace = 0;
     private float horizontalInput;
@@ -52,6 +60,7 @@ public class PlayerCharacter : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -60,10 +69,12 @@ public class PlayerCharacter : MonoBehaviour
         UpdateIsOnGround();
         UpdateHorizontalInput();
         HandleJumpInput();
-        SwordAttack();
+        if (Input.GetButtonDown("Attack") && !isDead && !isDashing)
+        {
+            Dash();
+        }
         UpdateAnimationParameters();
         UpdateRespawn();
-        Dashing();
     }
     private void FixedUpdate()
     {
@@ -98,6 +109,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && isOnGround && !isDead)
         {
+            audioSource.PlayOneShot(jumpClip,1);
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
@@ -145,6 +157,8 @@ public class PlayerCharacter : MonoBehaviour
 
     public void KillPlayer()
     {
+        audioSource.clip = deathClip;
+        audioSource.Play();
         isDead = true;
         rb2d.freezeRotation = false;
     }
@@ -178,48 +192,31 @@ public class PlayerCharacter : MonoBehaviour
         currentCheckpoint = newCurrentCheckpoint;
     }
 
-    void SwordAttack()
+    void Dash()
     {
-        
-
-        if (Input.GetButtonDown("Attack") && !isDead && !isDashing)
-        {
-            isDashing = true;
-            anim.SetTrigger("AttackTrigger");
-            
-
-
-            //if (horizontalInput > 0 && !facingRight)
-            //{
-            //    Flip();
-            //    rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
-            //}
-
-            //else if (horizontalInput < 0 && facingRight)
-            //{
-            //    Flip();
-            //    rb2d.AddForce(new Vector2(-boost, 0), ForceMode2D.Impulse);
-            //}
-
-        }
+        isDashing = true;
+        FreezeY();
+        anim.SetBool("IsDashing", isDashing);
     }
 
-    void Dashing()
-    {
-        if (isDashing)
-        {
-            Timer--;
-            FreezeY();
-            rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
 
 
-            if (Timer <= 0)
-            {
-                isDashing = false;
-                UnfreezeY();
-            }
-        }
-    }
+    //void Dashing()
+    //{
+    //    if (isDashing)
+    //    {
+    //        //Timer--; use Time.DeltaTime for timers
+    //        FreezeY();
+    //        rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
+
+
+    //        if (Timer <= 0)
+    //        {
+    //            isDashing = false;
+    //            UnfreezeY();
+    //        }
+    //    }
+    //}
 
     void FreezeY()
     {
