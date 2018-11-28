@@ -31,7 +31,7 @@ public class PlayerCharacter : MonoBehaviour
     private PhysicsMaterial2D playerMovingPhysicsMaterial, playerStoppingPhysicsMaterial;
 
     [SerializeField]
-    private float boost;
+    private float dashForce;
 
     [SerializeField]
     private AudioClip jumpClip;
@@ -50,8 +50,9 @@ public class PlayerCharacter : MonoBehaviour
     private bool isDashing;
 
     [SerializeField]
-    private float Timer;
-
+    private float dashDrag =0f;
+    [SerializeField]
+    private float walkingDrag = 0f;
 
     Animator anim;
 
@@ -72,6 +73,7 @@ public class PlayerCharacter : MonoBehaviour
         if (Input.GetButtonDown("Attack") && !isDead && !isDashing)
         {
             Dash();
+            
         }
         UpdateAnimationParameters();
         UpdateRespawn();
@@ -197,26 +199,19 @@ public class PlayerCharacter : MonoBehaviour
         isDashing = true;
         FreezeY();
         anim.SetBool("IsDashing", isDashing);
+        rb2d.drag = dashDrag;
+
+
+        rb2d.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
     }
 
-
-
-    //void Dashing()
-    //{
-    //    if (isDashing)
-    //    {
-    //        //Timer--; use Time.DeltaTime for timers
-    //        FreezeY();
-    //        rb2d.AddForce(new Vector2(boost, 0), ForceMode2D.Impulse);
-
-
-    //        if (Timer <= 0)
-    //        {
-    //            isDashing = false;
-    //            UnfreezeY();
-    //        }
-    //    }
-    //}
+    private void StopDashing()
+    {
+        UnfreezeY();
+        isDashing = false;
+        anim.SetBool("IsDashing", isDashing);
+        rb2d.drag = walkingDrag;
+    }
 
     void FreezeY()
     {

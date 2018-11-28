@@ -7502,7 +7502,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.14, y: -1.27, z: -10}
+  m_LocalPosition: {x: -12.86, y: 2.24, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7680,7 +7680,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 660348473}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.14, y: -1.27, z: -10}
+  m_LocalPosition: {x: -12.86, y: 2.24, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 773771377}
@@ -12540,7 +12540,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1921466544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.14, y: -1.27, z: 0}
+  m_LocalPosition: {x: -12.86, y: 2.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -12581,10 +12581,11 @@ MonoBehaviour:
     type: 2}
   playerStoppingPhysicsMaterial: {fileID: 6200000, guid: 99a8ef6ac466ad0449fc543aceabda7e,
     type: 2}
-  boost: 120
+  dashForce: 50
   jumpClip: {fileID: 8300000, guid: 701f9bed559b45a4484a81595bec77ba, type: 3}
   deathClip: {fileID: 8300000, guid: 39766ae62da2ada4789366432bed9719, type: 3}
-  Timer: 2
+  dashDrag: 6
+  walkingDrag: 0
 --- !u!58 &1921466550
 CircleCollider2D:
   m_ObjectHideFlags: 0
