@@ -201,8 +201,16 @@ public class PlayerCharacter : MonoBehaviour
         anim.SetBool("IsDashing", isDashing);
         rb2d.drag = dashDrag;
 
-
-        rb2d.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
+        if (DirectionalFace == -1)
+        {
+            dashForce = 50;
+            rb2d.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
+        }
+        else if (DirectionalFace == 1)
+        {
+            dashForce = -50;
+            rb2d.AddForce(new Vector2(dashForce, 0), ForceMode2D.Impulse);
+        }
     }
 
     private void StopDashing()
