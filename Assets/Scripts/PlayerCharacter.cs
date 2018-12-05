@@ -163,6 +163,7 @@ public class PlayerCharacter : MonoBehaviour
         audioSource.Play();
         isDead = true;
         rb2d.freezeRotation = false;
+        
     }
 
     private void UpdateRespawn()
@@ -200,6 +201,7 @@ public class PlayerCharacter : MonoBehaviour
         FreezeY();
         anim.SetBool("IsDashing", isDashing);
         rb2d.drag = dashDrag;
+        Debug.Log("You dashed");
 
         if (DirectionalFace == -1)
         {
