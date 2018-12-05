@@ -7,7 +7,8 @@ public class Door : MonoBehaviour
 {
     private bool isPlayerInTrigger;
 
-    private int levelNumber = 0;
+    [SerializeField]
+    private string levelName;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,13 +30,12 @@ public class Door : MonoBehaviour
     {
         if (Input.GetButtonDown("Activate") && isPlayerInTrigger)
         {
-            if(levelNumber == 0)
+            if(levelName == "Scene2")
             {
                 Debug.Log("Check it out");
                 SceneManager.LoadScene("Cave2");
-                levelNumber++;
             }
-            else if (levelNumber == 1)
+            else if (levelName == "Cemetary")
             {
                 SceneManager.LoadScene("Cemetary");
             }

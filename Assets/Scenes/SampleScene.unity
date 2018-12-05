@@ -7620,6 +7620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd4d0ef1ac80594990091f95f68cdd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelName: Scene2
 --- !u!1 &660348473
 GameObject:
   m_ObjectHideFlags: 0
@@ -7822,6 +7823,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114567556141384530, guid: 64e0db8151a825848afc80c9fd1398b9,
+        type: 2}
+      propertyPath: swordSwing
+      value: 
+      objectReference: {fileID: 8300000, guid: 73f85bde2446d004d924daddae3941b9, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64e0db8151a825848afc80c9fd1398b9, type: 2}
   m_IsPrefabParent: 0

@@ -39,6 +39,9 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     private AudioClip deathClip;
 
+    [SerializeField]
+    private AudioClip swordSwing;
+
     private AudioSource audioSource;
 
     private Checkpoint currentCheckpoint;
@@ -202,6 +205,8 @@ public class PlayerCharacter : MonoBehaviour
         anim.SetBool("IsDashing", isDashing);
         rb2d.drag = dashDrag;
         Debug.Log("You dashed");
+        audioSource.clip = swordSwing;
+        audioSource.Play();
 
         if (DirectionalFace == -1)
         {

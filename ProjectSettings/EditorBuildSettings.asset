@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cave2.unity
     guid: 9ec5957b3dd76e5448c0ce6352e929c3
+  - enabled: 1
+    path: Assets/Scenes/Cemetary.unity
+    guid: 0d3fa0a2cae324145b51bd6aa5a08366
   m_configObjects: {}
