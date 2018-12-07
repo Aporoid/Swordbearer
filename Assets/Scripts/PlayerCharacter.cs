@@ -196,13 +196,12 @@ public class PlayerCharacter : MonoBehaviour
         currentCheckpoint = newCurrentCheckpoint;
     }
 
-    void Dash()
+    private void Dash()
     {
         isDashing = true;
         FreezeYAxis();
         anim.SetBool("IsDashing", isDashing);
         rb2d.drag = dashDrag;
-        Debug.Log("You dashed");
         audioSource.clip = swordSwing;
         audioSource.Play();
 
