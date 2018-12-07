@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCharacter : MonoBehaviour
 {
-
-    [SerializeField]
+	#region SerializedFields
+	[SerializeField]
     private float accelerationForce = 5;
 
     [SerializeField]
@@ -41,6 +41,7 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField]
     private AudioClip swordSwing;
+	#endregion
 
     private AudioSource audioSource;
 
@@ -48,14 +49,14 @@ public class PlayerCharacter : MonoBehaviour
     private int DirectionalFace = 0;
     private float horizontalInput;
     private bool isOnGround;
-    bool facingRight = true;
+    private bool facingRight = true;
     private bool isDead;
     private bool isDashing;
 
     [SerializeField]
-    private float dashDrag =0f;
+    private float dashDrag;
     [SerializeField]
-    private float walkingDrag = 0f;
+    private float walkingDrag;
 
     Animator anim;
 
@@ -68,7 +69,7 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    private void Update ()
     {
         UpdateIsOnGround();
         UpdateHorizontalInput();
@@ -76,7 +77,6 @@ public class PlayerCharacter : MonoBehaviour
         if (Input.GetButtonDown("Attack") && !isDead && !isDashing)
         {
             Dash();
-            
         }
         UpdateAnimationParameters();
         UpdateRespawn();
@@ -85,7 +85,8 @@ public class PlayerCharacter : MonoBehaviour
     {
         UpdatePhysicsMaterials();
         Move();
-        if (!isDead) FlipIfNeeded();
+        if (!isDead)
+			FlipIfNeeded();
     }
 
     private void UpdateIsOnGround()
@@ -119,7 +120,6 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-
     private void FlipIfNeeded()
     {
         if (horizontalInput > 0 && !facingRight)
@@ -145,7 +145,7 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    void Flip()
+    private void Flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
@@ -153,7 +153,7 @@ public class PlayerCharacter : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    void UpdateAnimationParameters()
+    private void UpdateAnimationParameters()
     {
         anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         anim.SetBool("Ground", isOnGround);
@@ -166,7 +166,6 @@ public class PlayerCharacter : MonoBehaviour
         audioSource.Play();
         isDead = true;
         rb2d.freezeRotation = false;
-        
     }
 
     private void UpdateRespawn()
@@ -187,7 +186,6 @@ public class PlayerCharacter : MonoBehaviour
         else
         {
             transform.position = currentCheckpoint.transform.position;
-
         }
         rb2d.freezeRotation = true;
         rb2d.rotation = 0;
@@ -201,7 +199,7 @@ public class PlayerCharacter : MonoBehaviour
     void Dash()
     {
         isDashing = true;
-        FreezeY();
+        FreezeYAxis();
         anim.SetBool("IsDashing", isDashing);
         rb2d.drag = dashDrag;
         Debug.Log("You dashed");
@@ -222,18 +220,18 @@ public class PlayerCharacter : MonoBehaviour
 
     private void StopDashing()
     {
-        UnfreezeY();
+        UnfreezeYAxis();
         isDashing = false;
         anim.SetBool("IsDashing", isDashing);
         rb2d.drag = walkingDrag;
     }
 
-    void FreezeY()
+    private void FreezeYAxis()
     {
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
     }
 
-    void UnfreezeY()
+    private void UnfreezeYAxis()
     {
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }

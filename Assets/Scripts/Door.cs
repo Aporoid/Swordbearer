@@ -30,7 +30,7 @@ public class Door : MonoBehaviour
     {
         if (Input.GetButtonDown("Activate") && isPlayerInTrigger)
         {
-            if(levelName == "Scene2")
+            if(levelName == "Scene2") // loads Cave 2 because I named that as Scene 2 originally, was too much work to rename
             {
                 Debug.Log("Check it out");
                 SceneManager.LoadScene("Cave2");

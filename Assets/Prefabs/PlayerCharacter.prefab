@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 30
   maxSpeed: 8
-  jumpForce: 13
+  jumpForce: 15
   rb2d: {fileID: 50862172834237920}
   playerGroundCollider: {fileID: 70657647689186356}
   groundDetectTrigger: {fileID: 58569115899823858}
@@ -273,6 +273,7 @@ MonoBehaviour:
   dashForce: 50
   jumpClip: {fileID: 8300000, guid: 701f9bed559b45a4484a81595bec77ba, type: 3}
   deathClip: {fileID: 8300000, guid: 39766ae62da2ada4789366432bed9719, type: 3}
+  swordSwing: {fileID: 0}
   dashDrag: 6
   walkingDrag: 0
 --- !u!212 &212350386656864100
