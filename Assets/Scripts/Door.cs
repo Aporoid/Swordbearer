@@ -39,6 +39,10 @@ public class Door : MonoBehaviour
             {
                 SceneManager.LoadScene("Cemetary");
             }
+			else if (levelName == "EndSlate")
+			{
+				SceneManager.LoadScene("EndScene");
+			}
         }
     }
 }
