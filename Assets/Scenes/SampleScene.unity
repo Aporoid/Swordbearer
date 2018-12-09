@@ -7729,7 +7729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd4d0ef1ac80594990091f95f68cdd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: Scene2
+  levelName: Cave2
 --- !u!1 &660348473
 GameObject:
   m_ObjectHideFlags: 0

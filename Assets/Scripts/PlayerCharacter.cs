@@ -10,10 +10,10 @@ public class PlayerCharacter : MonoBehaviour
     private float accelerationForce = 5;
 
     [SerializeField]
-    private float maxSpeed = 5f;
+    private float maxSpeed;
 
-    [SerializeField]
-    private float jumpForce = 10f;
+	[SerializeField]
+	private float jumpForce;
 
     [SerializeField]
     private Rigidbody2D rb2d;
@@ -41,11 +41,15 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField]
     private AudioClip swordSwing;
+
+    [SerializeField]
+    private float dashDrag;
+    [SerializeField]
+    private float walkingDrag;
 	#endregion
 
     private AudioSource audioSource;
-
-    private Checkpoint currentCheckpoint;
+	private Checkpoint currentCheckpoint;
     private int DirectionalFace = 0;
     private float horizontalInput;
     private bool isOnGround;
@@ -53,12 +57,8 @@ public class PlayerCharacter : MonoBehaviour
     private bool isDead;
     private bool isDashing;
 
-    [SerializeField]
-    private float dashDrag;
-    [SerializeField]
-    private float walkingDrag;
 
-    Animator anim;
+    private Animator anim;
 
     private Collider2D[] groundHitDetectionResults = new Collider2D[16];
 
@@ -79,7 +79,7 @@ public class PlayerCharacter : MonoBehaviour
             Dash();
         }
         UpdateAnimationParameters();
-        UpdateRespawn();
+        TriggerRespawn();
     }
     private void FixedUpdate()
     {
@@ -168,7 +168,7 @@ public class PlayerCharacter : MonoBehaviour
         rb2d.freezeRotation = false;
     }
 
-    private void UpdateRespawn()
+    private void TriggerRespawn()
     {
         if(isDead && Input.GetButtonDown("Respawn"))
         {
