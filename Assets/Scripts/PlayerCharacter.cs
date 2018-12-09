@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -48,7 +49,8 @@ public class PlayerCharacter : MonoBehaviour
     private float walkingDrag;
 	#endregion
 
-    private AudioSource audioSource;
+	public Text DeathText;
+	private AudioSource audioSource;
 	private Checkpoint currentCheckpoint;
     private int DirectionalFace = 0;
     private float horizontalInput;
@@ -66,6 +68,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+		DeathText.text = "";
     }
 
     // Update is called once per frame
@@ -166,6 +169,7 @@ public class PlayerCharacter : MonoBehaviour
         audioSource.Play();
         isDead = true;
         rb2d.freezeRotation = false;
+		DeathText.text = "You died! Press R to respawn...";
     }
 
     private void TriggerRespawn()
@@ -187,6 +191,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             transform.position = currentCheckpoint.transform.position;
         }
+		DeathText.text = "";
         rb2d.freezeRotation = true;
         rb2d.rotation = 0;
     }
