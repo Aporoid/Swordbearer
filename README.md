@@ -2,6 +2,8 @@
 
 https://aporoid.itch.io/swordbearer
 
+Code and game design by Kyle Cook
+
 VISUALS:
 https://ansimuz.itch.io/sunny-land-pixel-game-art (Gemstone)
 https://ansimuz.itch.io/gothicvania-cemetery (cemetery scene and BG)
